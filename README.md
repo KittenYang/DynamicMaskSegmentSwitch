@@ -1,7 +1,7 @@
 # DynamicMaskSegmentSwitch
 A segment switcher with dynamic text mask effect
 
-##It looks like:
+##Screenshot:
 
 ![](maskSwitcher.gif)
 
