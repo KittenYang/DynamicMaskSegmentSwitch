@@ -26,7 +26,16 @@ struct DynamicMaskSegmentSwitchConfigure {
 
 class DynamicMaskSegmentSwitch: UIView {
     
-    var configure: DynamicMaskSegmentSwitchConfigure!
+    var configure: DynamicMaskSegmentSwitchConfigure! {
+        didSet{
+            initialViews()
+        }
+    }
+    var progress: CGFloat = 0 {
+        didSet{
+            updateIndicatorOrigin()
+        }
+    }
     private let marginInset: CGFloat = 2.0
     private var count: Int {
         set{ self.count = newValue }
@@ -43,11 +52,10 @@ class DynamicMaskSegmentSwitch: UIView {
     init(frame: CGRect, configure: DynamicMaskSegmentSwitchConfigure) {
         super.init(frame: frame)
         self.configure = configure
-        initialViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     deinit {
@@ -59,9 +67,13 @@ class DynamicMaskSegmentSwitch: UIView {
     }
     
     func switchToItem(index: Int) {
-        UIView.animateWithDuration(0.6, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.8, options: [.BeginFromCurrentState, .CurveEaseInOut], animations: {
+        UIView.animateWithDuration(0.6, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [.BeginFromCurrentState, .CurveEaseInOut], animations: {
             self.indicator.frame.origin = CGPoint(x: self.marginInset + CGFloat(index)*self.eachItemWidth, y: self.marginInset)
             }, completion: nil)
+    }
+    
+    func updateIndicatorOrigin() {
+        indicator.frame.origin = CGPoint(x: marginInset + progress*CGFloat(count-1)*eachItemWidth, y: indicator.frame.origin.y)
     }
     
 }

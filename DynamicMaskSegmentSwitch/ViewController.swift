@@ -9,21 +9,24 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var switcher: DynamicMaskSegmentSwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let configure = DynamicMaskSegmentSwitchConfigure(highlightedColor: .orangeColor(), normalColor: .whiteColor(), items: ["sddass","saddf","safdsf"])
+        let configure = DynamicMaskSegmentSwitchConfigure(highlightedColor: .orangeColor(), normalColor: .whiteColor(), items: ["首页","消息","发现","个人"])
+        switcher.configure = configure
         
-        let switcher = DynamicMaskSegmentSwitch(frame: CGRect(x: 0, y: 0, width: 200, height: 40), configure: configure)
-        switcher.center = view.center
-        view.addSubview(switcher)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func sliderValueChanged(sender: UISlider) {
+        switcher.progress = CGFloat(sender.value)
+    }
 
 }
 
