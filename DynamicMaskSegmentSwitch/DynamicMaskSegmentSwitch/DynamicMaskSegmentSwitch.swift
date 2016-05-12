@@ -27,6 +27,14 @@ struct DynamicMaskSegmentSwitchConfigure {
 class DynamicMaskSegmentSwitch: UIView {
     
     var configure: DynamicMaskSegmentSwitchConfigure!
+    private let marginInset: CGFloat = 2.0
+    private var count: Int {
+        set{ self.count = newValue }
+        get{ return self.configure.items.count }
+    }
+    private var eachItemWidth: CGFloat {
+        return self.bounds.width / CGFloat(count)
+    }
     
     private(set) var indicator = UIView()
     private var selectedLabelsBaseView = UIView()
@@ -50,6 +58,12 @@ class DynamicMaskSegmentSwitch: UIView {
         return RoundedLayer.self
     }
     
+    func switchToItem(index: Int) {
+        UIView.animateWithDuration(0.6, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.8, options: [.BeginFromCurrentState, .CurveEaseInOut], animations: {
+            self.indicator.frame.origin = CGPoint(x: self.marginInset + CGFloat(index)*self.eachItemWidth, y: self.marginInset)
+            }, completion: nil)
+    }
+    
 }
 
 /// private
@@ -57,9 +71,6 @@ extension DynamicMaskSegmentSwitch {
     
     private func initialViews() {
         backgroundColor = configure.highlightedColor
-        let count = configure.items.count
-        let eachItemWidth = bounds.width / CGFloat(count)
-        let marginInset: CGFloat = 2.0
         
         for i in 0..<count {
             let item = configure.items[i]
@@ -99,28 +110,15 @@ extension DynamicMaskSegmentSwitch {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DynamicMaskSegmentSwitch.handleTapGesture(_:)))
         addGestureRecognizer(tapGesture)
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(DynamicMaskSegmentSwitch.handlePanGesture(_:)))
-        panGesture.delegate = self
-        addGestureRecognizer(panGesture)
-
-        
     }
     
     /// gesture actions
     @objc private func handleTapGesture(gesture: UITapGestureRecognizer) {
         let location = gesture.locationInView(self)
-        let count = configure.items.count
-        switch location.x {
-        case 0..<bounds.height/CGFloat(count):
-            UI
-        default:
-            <#code#>
-        }
+        let index = Int(floor(location.x / eachItemWidth))
+        switchToItem(index)
     }
     
-    @objc private func handlePanGesture(gesture: UIPanGestureRecognizer) {
-        
-    }
 }
 
 /// KVO
@@ -133,17 +131,3 @@ extension DynamicMaskSegmentSwitch {
     }
     
 }
-
-
-/// UIGestureRecognizer Delegate
-extension DynamicMaskSegmentSwitch: UIGestureRecognizerDelegate {
-    
-    override internal func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.isKindOfClass(UIPanGestureRecognizer.self) {
-            return indicator.frame.contains(gestureRecognizer.locationInView(self))
-        }
-        return super.gestureRecognizerShouldBegin(gestureRecognizer)
-    }
-    
-}
-
