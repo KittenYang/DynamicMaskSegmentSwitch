@@ -31,11 +31,13 @@ class DynamicMaskSegmentSwitch: UIView {
             initialViews()
         }
     }
+    
     var progress: CGFloat = 0 {
         didSet{
             updateIndicatorOrigin()
         }
     }
+    
     private let marginInset: CGFloat = 2.0
     private var count: Int {
         set{ self.count = newValue }
@@ -44,7 +46,6 @@ class DynamicMaskSegmentSwitch: UIView {
     private var eachItemWidth: CGFloat {
         return self.bounds.width / CGFloat(count)
     }
-    
     private(set) var indicator = UIView()
     private var selectedLabelsBaseView = UIView()
     private var selectedLabelsMaskView = UIView()
@@ -82,6 +83,7 @@ class DynamicMaskSegmentSwitch: UIView {
 extension DynamicMaskSegmentSwitch {
     
     private func initialViews() {
+        
         backgroundColor = configure.highlightedColor
         
         for i in 0..<count {
@@ -126,9 +128,11 @@ extension DynamicMaskSegmentSwitch {
     
     /// gesture actions
     @objc private func handleTapGesture(gesture: UITapGestureRecognizer) {
+        
         let location = gesture.locationInView(self)
         let index = Int(floor(location.x / eachItemWidth))
         switchToItem(index)
+        
     }
     
 }
