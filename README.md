@@ -5,10 +5,10 @@ A segment switcher with dynamic text mask effect
 
 ![](maskSwitcher.gif)
 
+Indicator will bounce when progress less than 0 or larger than 1.
 
 ![](SwitcherBounceable.gif)
 
-Indicator will bounce when progress less than 0 or larger than 1.
 
 ##Simple Usage:
 
