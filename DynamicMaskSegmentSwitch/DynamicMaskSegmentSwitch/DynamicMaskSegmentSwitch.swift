@@ -68,13 +68,23 @@ class DynamicMaskSegmentSwitch: UIView {
     }
     
     func switchToItem(index: Int) {
+        progress = 1
         UIView.animateWithDuration(0.6, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [.BeginFromCurrentState, .CurveEaseInOut], animations: {
             self.indicator.frame.origin = CGPoint(x: self.marginInset + CGFloat(index)*self.eachItemWidth, y: self.marginInset)
             }, completion: nil)
     }
     
     func updateIndicatorOrigin() {
-        indicator.frame.origin = CGPoint(x: marginInset + progress*CGFloat(count-1)*eachItemWidth, y: indicator.frame.origin.y)
+        if progress >= 0 {
+            indicator.frame.origin = CGPoint(x: marginInset + progress*CGFloat(count-1)*eachItemWidth, y: indicator.frame.origin.y)
+        } else {
+            indicator.frame.size = CGSize(width: (eachItemWidth-marginInset*2)*(1-log(1 - progress)), height: indicator.frame.height)
+        }
+        
+        if progress > 1 {
+            indicator.frame.size = CGSize(width: (eachItemWidth-marginInset*2)*(1-log(progress)), height: indicator.frame.height)
+            indicator.frame.origin = CGPoint(x: marginInset + CGFloat(count)*eachItemWidth - marginInset*2 - indicator.frame.width, y: indicator.frame.origin.y)
+        }
     }
     
 }
