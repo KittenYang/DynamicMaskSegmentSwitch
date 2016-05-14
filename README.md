@@ -1,9 +1,14 @@
 # DynamicMaskSegmentSwitch
 A segment switcher with dynamic text mask effect
 
-##Screenshot:
+##Preview:
 
 ![](maskSwitcher.gif)
+
+Indicator will bounce when progress less than 0 or larger than 1.
+
+![](SwitcherBounceable.gif)
+
 
 ##Simple Usage:
 
