@@ -19,8 +19,19 @@ You can create DynamicMaskSegmentSwitch by xib or programmatically.Then just fil
     switcher.configure = configure
 ```
 
+And you must set the delegate `DynamicMaskSegmentSwitchDelegate` and use this method
+
+```swift
+	switcher.delegate = self
+    func switcher(switcher: DynamicMaskSegmentSwitch, didSelectAtIndex index: Int) {
+        
+    }
+```
+
 That's all!
 
 You can tap the specific item,the indicator will move to target item.
 
 You can also change the property named `progress`,the indicator will also move with progress.
+
+

@@ -38,6 +38,8 @@ class DynamicMaskSegmentSwitch: UIView {
         }
     }
     
+    weak var delegate: DynamicMaskSegmentSwitchDelegate?
+    
     private let marginInset: CGFloat = 2.0
     private var count: Int {
         set{ self.count = newValue }
@@ -142,6 +144,9 @@ extension DynamicMaskSegmentSwitch {
         let index = Int(floor(location.x / eachItemWidth))
         switchToItem(index)
         
+        if let delegate = self.delegate {
+            delegate.switcher(self, didSelectAtIndex: index)
+        }
     }
     
 }
@@ -155,4 +160,8 @@ extension DynamicMaskSegmentSwitch {
         }
     }
     
+}
+
+protocol DynamicMaskSegmentSwitchDelegate: class {
+    func switcher(switcher: DynamicMaskSegmentSwitch, didSelectAtIndex index: Int) -> Void
 }
