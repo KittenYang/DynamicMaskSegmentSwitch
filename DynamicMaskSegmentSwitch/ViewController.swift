@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let configure = DynamicMaskSegmentSwitchConfigure(highlightedColor: .orangeColor(), normalColor: .whiteColor(), items: ["首页","消息","发现","个人"])
+        let configure = DynamicMaskSegmentSwitchConfigure(highlightedColor: UIColor.orange, normalColor: UIColor.white, items: ["首页","消息","发现","个人"])
         switcher.configure = configure
         
     }
@@ -24,9 +24,9 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    @IBAction func sliderValueChanged(sender: UISlider) {
+    @IBAction func handleSliderValueChanged(_ sender: UISlider) {
         switcher.progress = CGFloat(sender.value)
     }
-
+    
 }
 
